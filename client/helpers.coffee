@@ -1,5 +1,6 @@
-UI.registerHelper "CLNDR", ->
-	helpers
+@_CLNDR =
+	active_calendars: {}
+	reactive_calendars: new ReactiveVar {}
 
 helpers =
 	dates: (id) ->
@@ -11,18 +12,26 @@ helpers =
 
 			calendar.calendar()
 
+	find: ->
+		_CLNDR.reactive_calendars.get()
+
+UI.registerHelper "CLNDR", ->
+	helpers
+
 Template.body.events
-	"click .CLNDR.next": (e) ->
+	"click .CLNDR_next": (e) ->
 		calendar = $(e.currentTarget).attr "clndr"
 
 		_CLNDR.active_calendars[calendar].next()
 
-	"click .CLNDR.previous": (e,template) ->
+	"click .CLNDR_previous": (e) ->
 		calendar = $(e.currentTarget).attr "clndr"
 
 		_CLNDR.active_calendars[calendar].previous()
 
-	"click .CLNDR.today": (e,template) ->
+	"click .CLNDR_today": (e) ->
 		calendar = $(e.currentTarget).attr "clndr"
 
 		_CLNDR.active_calendars[calendar].show_today()
+
+

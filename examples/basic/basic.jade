@@ -11,6 +11,10 @@ body
 template(name="calendar")
 	div.calendar.container
 		div.row
+			div.col-xs-7
+				p.text-center {{format_date CLNDR.find.christmas.current_month}}
+
+		div.row
 			div.col-sm-1
 				p.text-center S
 			div.col-sm-1
@@ -29,7 +33,7 @@ template(name="calendar")
 		div.clearfix
 		div.row
 			each CLNDR.dates "christmas"
-				div.col-sm-1
+				div.col-sm-1.CLNDR_days
 					if previous_month
 						p.text-center.text-muted {{day}}
 
@@ -43,9 +47,9 @@ template(name="calendar")
 
 			div.row
 				div.col-xs-2
-					button.btn.btn-block.btn-primary.CLNDR.previous(clndr="christmas") Previous
+					button.btn.btn-block.btn-primary.CLNDR_previous(clndr="christmas") Previous
 				div.col-xs-3
-					button.btn.btn-block.btn-primary.CLNDR.today(clndr="christmas") Today
+					button.btn.btn-block.btn-primary.CLNDR_today(clndr="christmas") Today
 				div.col-xs-2
-					button.btn.btn-block.btn-primary.CLNDR.next(clndr="christmas") Next
+					button.btn.btn-block.btn-primary.CLNDR_next(clndr="christmas") Next
 

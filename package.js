@@ -1,6 +1,6 @@
 Package.describe({
 	name:"lepozepo:clndr",
-	summary: "A better date picker / calendar interface",
+	summary: "A better date picker / calendar interface for Meteor",
 	version:"1.0.0",
 	git:"https://github.com/Lepozepo/clndr"
 });

@@ -1,9 +1,6 @@
-@_CLNDR =
-	active_calendars: {}
-
 class @CLNDR
 	constructor: (data={}) ->
-		#data.id = Unique identifier (no spaces allowed!), used to get data from it later
+		#data.id = Unique identifier (alphanumeric only), used to get data from it later
 		#data.month
 		#data.year
 		#data.display_days = How many days to show (default:42)
@@ -11,21 +8,24 @@ class @CLNDR
 
 		@id = data.id
 		_CLNDR.active_calendars["#{@id}"] = this
+		_CLNDR.reactive_calendars.set _CLNDR.active_calendars
 
-		@days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-		@months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
 		@days_per_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+		@display_days = data.display_days or 42
+		@indent = data.indent or 6
+
 		@today = new Date()
 		@month = new ReactiveVar data.month or @today.getMonth()
 		@year = data.year or @today.getFullYear()
-		@display_days = data.display_days or 42
-		@indent = data.indent or 6
 
 	day_of_month: (data={day:1}) ->
 		if not data.month and data.month isnt 0
 			data.month = @month.get()
 
-		day = new Date @year,data.month,data.day
+		if not data.year and data.year isnt 0
+			data.year = @year
+
+		day = new Date data.year,data.month,data.day
 		day.getDay()
 
 	days_of_month: (month) ->
@@ -43,20 +43,31 @@ class @CLNDR
 		first_weekday = @day_of_month
 			day:1
 
-		if first_weekday isnt 0
+		if first_weekday isnt 0 #Don't calculate if the month begins on a Sunday
 			for day in [1..@day_of_month()]
+				if @month.get() is 0 #Calculate last year if first month
+					year = @year - 1
+					month = 11
+					day_number = 31 - (@day_of_month() - day)
+				else
+					year = @year
+					month = @month.get()-1
+					day_number = @days_per_month[@month.get()-1] - (@day_of_month()-day)
+
 				weekday = @day_of_month
-					month: @month.get() - 1
-					day: @days_per_month[@month.get()-1] - ((@day_of_month())-day)
+					year: year
+					month: month
+					day: day_number
 
 				indent = if weekday is @indent then true else false
 
 				cal.push
 					position: day
 					weekday: weekday
-					day: @days_per_month[@month.get()-1] - ((@day_of_month())-day)
+					day: day_number
 					previous_month:true
 					indent: indent
+					date:new Date year,month,day_number
 
 		#this month
 		for day in [1..@days_of_month()]
@@ -71,6 +82,7 @@ class @CLNDR
 				day: day
 				current_month:true
 				indent: indent
+				date:new Date @year,@month.get(),day
 
 		#next month first week
 		cal_length = cal.length
@@ -87,7 +99,7 @@ class @CLNDR
 				day:day
 				next_month:true
 				indent: indent
-
+				date:new Date @year,(@month.get()+1),day
 		cal
 
 	next: ->
@@ -108,6 +120,7 @@ class @CLNDR
 		todays_month = @today.getMonth()
 		@month.set todays_month
 
-
+	current_month: ->
+		new Date @year,@month.get()
 
 
