@@ -108,6 +108,7 @@ class @CLNDR
 			@month.set(current_month + 1)
 		else
 			@month.set 0
+			@year += 1
 
 	previous: ->
 		current_month = @month.get()
@@ -115,9 +116,12 @@ class @CLNDR
 			@month.set(current_month - 1)
 		else
 			@month.set 11
+			@year -= 1
 
 	show_today: ->
 		todays_month = @today.getMonth()
+		todays_year = @today.getFullYear()
+		@year = todays_year
 		@month.set todays_month
 
 	current_month: ->

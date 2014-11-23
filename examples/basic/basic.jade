@@ -42,6 +42,7 @@ template(name="calendar")
 
 					if current_month
 						p.text-center.text-danger {{day}}
+
 				if indent
 					div.clearfix
 
@@ -52,4 +53,15 @@ template(name="calendar")
 					button.btn.btn-block.btn-primary.CLNDR_today(clndr="christmas") Today
 				div.col-xs-2
 					button.btn.btn-block.btn-primary.CLNDR_next(clndr="christmas") Next
+
+		div.row
+			div.col-xs-12
+				p.text-center {{selected_date}}
+
+
+
+
+
+
+
 
