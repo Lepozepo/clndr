@@ -1,0 +1,51 @@
+head
+	title basic
+
+body
+	h1.text-center CLNDR
+	br
+
+	+calendar
+
+
+template(name="calendar")
+	div.calendar.container
+		div.row
+			div.col-sm-1
+				p.text-center S
+			div.col-sm-1
+				p.text-center M
+			div.col-sm-1
+				p.text-center T
+			div.col-sm-1
+				p.text-center W
+			div.col-sm-1
+				p.text-center T
+			div.col-sm-1
+				p.text-center F
+			div.col-sm-1
+				p.text-center S
+
+		div.clearfix
+		div.row
+			each CLNDR.dates "christmas"
+				div.col-sm-1
+					if previous_month
+						p.text-center.text-muted {{day}}
+
+					if next_month
+						p.text-center.text-muted {{day}}
+
+					if current_month
+						p.text-center.text-danger {{day}}
+				if indent
+					div.clearfix
+
+			div.row
+				div.col-xs-2
+					button.btn.btn-block.btn-primary.CLNDR.previous(clndr="christmas") Previous
+				div.col-xs-3
+					button.btn.btn-block.btn-primary.CLNDR.today(clndr="christmas") Today
+				div.col-xs-2
+					button.btn.btn-block.btn-primary.CLNDR.next(clndr="christmas") Next
+
