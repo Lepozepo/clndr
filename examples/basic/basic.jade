@@ -1,5 +1,10 @@
 head
 	title basic
+	meta(name="apple-mobile-web-app-capable" content="yes")
+	meta(name="apple-mobile-web-app-status-bar-style" content="black")
+	meta(name="format-detection" content="telephone=no")
+	meta(name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0")
+
 
 body
 	h1.text-center CLNDR
@@ -15,25 +20,25 @@ template(name="calendar")
 				p.text-center {{format_date CLNDR.find.christmas.current_month}}
 
 		div.row
-			div.col-sm-1
+			div.col-xs-1
 				p.text-center S
-			div.col-sm-1
+			div.col-xs-1
 				p.text-center M
-			div.col-sm-1
+			div.col-xs-1
 				p.text-center T
-			div.col-sm-1
+			div.col-xs-1
 				p.text-center W
-			div.col-sm-1
+			div.col-xs-1
 				p.text-center T
-			div.col-sm-1
+			div.col-xs-1
 				p.text-center F
-			div.col-sm-1
+			div.col-xs-1
 				p.text-center S
 
 		div.clearfix
 		div.row
 			each CLNDR.dates "christmas"
-				div.col-sm-1.CLNDR_days
+				div.col-xs-1.CLNDR_days
 					if previous_month
 						p.text-center.text-muted {{day}}
 
